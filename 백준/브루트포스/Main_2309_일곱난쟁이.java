@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 
-public class Main_2039_일곱난쟁이 {
+public class Main_2309_일곱난쟁이 {
 
 	static int[] nanjange;
 
