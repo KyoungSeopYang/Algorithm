@@ -1,4 +1,4 @@
-package day0227;
+package day0320;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,18 +13,20 @@ public class Main_1012_유기농배추 {
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int T = Integer.parseInt(br.readLine());
         StringBuilder sb = new StringBuilder();
 
-        for (int tc = 0; tc < T; tc++) {
+        int T = Integer.parseInt(br.readLine());
+
+        while (T-- > 0) {
             StringTokenizer st = new StringTokenizer(br.readLine());
 
             int M = Integer.parseInt(st.nextToken());
             int N = Integer.parseInt(st.nextToken());
             int K = Integer.parseInt(st.nextToken());
 
+            int cnt = 0;
             int[][] map = new int[N][M];
-            int answer = 0;
+            boolean[][] visit = new boolean[N][M];
 
             for (int i = 0; i < K; i++) {
                 st = new StringTokenizer(br.readLine());
@@ -34,41 +36,40 @@ public class Main_1012_유기농배추 {
                 map[x][y] = 1;
             }
 
-            // 탐색하면서 해결하자
-
-            boolean[][] visit = new boolean[N][M];
-
             for (int x = 0; x < N; x++) {
                 for (int y = 0; y < M; y++) {
                     if (map[x][y] == 0 || visit[x][y]) continue;
 
-                    Queue<Pos> que = new LinkedList<>();
-                    que.add(new Pos(x, y));
+                    Queue<Pos> q = new LinkedList<>();
+                    q.offer(new Pos(x, y));
                     visit[x][y] = true;
-                    answer++;
+                    cnt++;
 
-                    while (!que.isEmpty()) {
-                        Pos cur = que.poll();
+                    while (!q.isEmpty()) {
+                        Pos cur = q.poll();
 
                         for (int i = 0; i < 4; i++) {
                             int nx = cur.x + dx[i];
                             int ny = cur.y + dy[i];
 
-                            if (nx < 0 || ny < 0 || nx >= N || ny >= M) continue;
-                            if (map[nx][ny] == 0 || visit[nx][ny]) continue;
+                            if (nx < 0 || ny < 0 || nx >= N || ny >= M || map[nx][ny] == 0 || visit[nx][ny]) continue;
 
-                            que.add(new Pos(nx, ny));
+                            q.offer(new Pos(nx, ny));
                             visit[nx][ny] = true;
                         }
+
                     }
+
+
                 }
             }
-            sb.append(answer).append("\n");
+
+            sb.append(cnt).append("\n");
         }
         System.out.println(sb);
     }
 
-    public static class Pos {
+    static class Pos {
         int x, y;
 
         public Pos(int x, int y) {
